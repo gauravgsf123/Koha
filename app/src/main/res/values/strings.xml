@@ -224,6 +224,8 @@
     <string name="please_enter_amount">Please enter amount</string>
     <string name="please_enter_valid_amount">"Please enter valid amount "</string>
     <string name="didin_t_receive_otp">Didin\'t receive OTP?</string>
+    <string name="my_qr_code">My QR Code</string>
+    <string name="qr_code">QR Code</string>
 
     <array name="library_list">
         <item>Title</item>

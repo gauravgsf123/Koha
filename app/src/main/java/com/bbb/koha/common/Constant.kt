@@ -61,6 +61,13 @@ object Constant {
     const val MERCHANT_AUTH_URL = "https://pay.mobilpay.in/index.php/getmerchantauthtoken"
     const val BILL_DETAIL = "https://mobylpe.com/index.php/getUserBillData"
 
+    //MSG91
+    const val MSG_URL = "https://control.msg91.com/api/v5/otp"
+    const val AUTH_KEY = "344904AF5EqBN463202df4P1"
+    const val TEMPLATE_ID = "63201e81d6fc05328e7839d2"
+    const val SENDER_ID = "BESTBB"
+    const val COUNTRY_CODE = "91"
+
     object FragmentType{
         const val BARCODE_SCAN = 1
         const val FILTER = 2

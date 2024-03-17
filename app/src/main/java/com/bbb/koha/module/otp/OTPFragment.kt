@@ -1,6 +1,5 @@
 package com.bbb.koha.module.otp
 
-import android.R.attr.phoneNumber
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,14 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.bbb.koha.R
 import com.bbb.koha.app.BaseBottomSheetDialogFragment
 import com.bbb.koha.common.Constant
 import com.bbb.koha.databinding.FragmentOtpBinding
+import com.bbb.koha.module.forgot.ForgotViewModel
 import com.bbb.koha.module.set_new_password.SetNewPasswordFragment
+import com.bbb.koha.network.Resource
+import com.bbb.koha.network.ViewModelFactoryClass
 import com.bbb.koha.utils.Mailer
 import com.bbb.koha.utils.ProgressDialog
 import com.bbb.koha.utils.Utils
+import com.msg91.sendotpandroid.library.internal.SendOTP
 import com.msg91.sendotpandroid.library.listners.VerificationListener
 import com.msg91.sendotpandroid.library.roots.SendOTPConfigBuilder
 import com.msg91.sendotpandroid.library.roots.SendOTPResponseCode
@@ -25,8 +29,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class OTPFragment : BaseBottomSheetDialogFragment(), VerificationListener {
+class OTPFragment : BaseBottomSheetDialogFragment()/* VerificationListener*/ {
     private lateinit var binding:FragmentOtpBinding
+    private lateinit var viewModel:OTPViewModel
     private var otp = "1234"
     private var type = Constant.VerificationType.EMAIL
     private var id = ""
@@ -58,13 +63,41 @@ class OTPFragment : BaseBottomSheetDialogFragment(), VerificationListener {
             btnContinue.setOnClickListener(this@OTPFragment)
             btnResend.setOnClickListener(this@OTPFragment)
         }
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactoryClass(requireActivity().application)
+        )[OTPViewModel::class.java]
         runTimerTask()
         if(type == Constant.VerificationType.EMAIL){
             sendOTPonMail(id)
         }else if(type == Constant.VerificationType.MOBILE){
             sendOTPonMobile(id)
         }
+        //SendOTP.getInstance().getTrigger().initiate()
+        setObserver()
         return binding.root
+    }
+
+    private fun setObserver() {
+        viewModel.otpResponse.observe(this) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    ProgressDialog.hideProgressBar()
+                    showToast(response.message!!)
+                }
+                is Resource.Loading -> {
+                    ProgressDialog.showProgressBar(requireContext())
+                }
+                is Resource.Error -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+                else -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+            }
+        }
     }
 
     override fun onClick(p0: View?) {
@@ -77,6 +110,7 @@ class OTPFragment : BaseBottomSheetDialogFragment(), VerificationListener {
                     }else showToast("Wrong OTP entered")
                 }
                 btnResend.id->{
+                    runTimerTask()
                     if(type == Constant.VerificationType.EMAIL){
                         sendOTPonMail(id)
                     }else if(type == Constant.VerificationType.MOBILE){
@@ -125,17 +159,30 @@ class OTPFragment : BaseBottomSheetDialogFragment(), VerificationListener {
     }
 
     private fun sendOTPonMobile(mobile:String) {
-        ProgressDialog.showProgressBar(requireContext())
         otp = Utils.getOTP()
+        var body = mapOf<String, String>(
+            "template_id" to Constant.TEMPLATE_ID,
+            "mobile" to mobile,
+            "authkey" to Constant.AUTH_KEY,
+            "otp" to otp,
+            "country" to Constant.COUNTRY_CODE,
+            "sender" to Constant.SENDER_ID,
+        )
+        viewModel.sendOTP(Constant.MSG_URL,body)
+
+       /* otp = Utils.getOTP()
         SendOTPConfigBuilder()
             .setCountryCode(91)
-            .setMobileNumber(mobile)
+            .setMobileNumber("7011351424")
             .setVerifyWithoutOtp(true) //direct verification while connect with mobile network
-            .setAutoVerification(activity) //Auto read otp from Sms And Verify
             .setSenderId("BESTBB")
-            .setMessage("$otp is Your verification digits.")
-            .setOtpLength(OTP_LNGTH)
+            .setMessage("123456 is Your verification digits.")
+            .setOtpLength(6)
+            .setOtp(otp.toInt())
+            .setUnicodeEnable(true)
             .setVerificationCallBack(this).build()
+
+        SendOTP.getInstance().getTrigger().initiate();*/
 
     }
 
@@ -152,18 +199,27 @@ class OTPFragment : BaseBottomSheetDialogFragment(), VerificationListener {
         }.start()
     }
 
-    override fun onSendOtpResponse(responseCode: SendOTPResponseCode?, message: String?) {
+    /*override fun onSendOtpResponse(responseCode: SendOTPResponseCode?, message: String?) {
         activity?.runOnUiThread(Runnable {
             if (responseCode === SendOTPResponseCode.DIRECT_VERIFICATION_SUCCESSFUL_FOR_NUMBER || responseCode === SendOTPResponseCode.OTP_VERIFIED) {
                 //otp verified OR direct verified by send otp 2.O
+                Log.d("responseCode","01 $responseCode")
             } else if (responseCode === SendOTPResponseCode.READ_OTP_SUCCESS) {
                 //Auto read otp from sms successfully
                 // you can get otp form message filled
+                SendOTP.getInstance().getTrigger().verify(otp);
+                Log.d("responseCode","02 $responseCode")
             } else if (responseCode === SendOTPResponseCode.SMS_SUCCESSFUL_SEND_TO_NUMBER || responseCode === SendOTPResponseCode.DIRECT_VERIFICATION_FAILED_SMS_SUCCESSFUL_SEND_TO_NUMBER) {
                 // Otp send to number successfully
+                Log.d("responseCode","03 $responseCode")
             } else {
                 //exception found
+                Log.d("responseCode","04 $responseCode")
             }
         })
+    }*/
+     override fun onDestroy() {
+        super.onDestroy()
+         //SendOTP.getInstance().getTrigger().stop()
     }
 }

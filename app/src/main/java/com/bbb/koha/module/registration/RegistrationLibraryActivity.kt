@@ -13,6 +13,7 @@ import com.bbb.koha.app.MVVMBindingActivity
 import com.bbb.koha.common.Constant
 import com.bbb.koha.databinding.ActivityRegistrationLibraryBinding
 import com.bbb.koha.login.LoginActivity
+import com.bbb.koha.module.otp.OTPFragment
 import com.bbb.koha.module.registration.model.AllCategoryResponseModel
 import com.bbb.koha.module.registration.model.AllLibraryResponseModel
 import com.bbb.koha.module.registration.model.RegisterUserRequestModel
@@ -83,6 +84,28 @@ class RegistrationLibraryActivity : MVVMBindingActivity<ActivityRegistrationLibr
             }
         }
 
+        viewModel.userDetailResponseModel.observe(this) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    ProgressDialog.hideProgressBar()
+                    if(response?.data?.isNotEmpty() == true) {
+                        showToast("Email id is already register")
+                    }else register()
+                }
+                is Resource.Loading -> {
+                    ProgressDialog.showProgressBar(this)
+                }
+                is Resource.Error -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+                else -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+            }
+        }
+
         viewModel.registerUserRequestModel.observe(this) { response ->
             when (response) {
                 is Resource.Success -> {
@@ -103,6 +126,32 @@ class RegistrationLibraryActivity : MVVMBindingActivity<ActivityRegistrationLibr
                     response.message?.let { showToast(it) }
                 }
             }
+        }
+    }
+
+    private fun register(){
+        binding?.run {
+            var requestModel = RegisterUserRequestModel()
+            requestModel.run {
+                firstname = intent.getStringExtra(Constant.FIRST_NAME)
+                surname = intent.getStringExtra(Constant.LAST_NAME)
+                dateOfBirth = intent.getStringExtra(Constant.DOB)
+                address = intent.getStringExtra(Constant.ADDRESS)
+                gender = intent.getStringExtra(Constant.GENDER)
+                cardnumber = etCardNumber.text.toString()
+                email = etEmail.text.toString()
+                mobile = etMobile.text.toString()
+                libraryId = library
+                categoryId = category
+            }
+            ProgressDialog.hideProgressBar()
+            RegistrationOtpFragment.newInstance(requestModel,
+                object : RegistrationOtpFragment.OnActionCompleteListener {
+                    override fun onActionComplete(registerUserRequestModel: RegisterUserRequestModel) {
+                        viewModel.registerUser(requestModel)
+                    }
+
+                }).show(supportFragmentManager, "OTPFragment")
         }
     }
 
@@ -152,49 +201,14 @@ class RegistrationLibraryActivity : MVVMBindingActivity<ActivityRegistrationLibr
     private fun validate(){
         binding?.run {
             if(TextUtils.isEmpty(etCardNumber.text.toString())){
-                Toast.makeText(this@RegistrationLibraryActivity,"Please enter first name", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@RegistrationLibraryActivity,"Please enter card number", Toast.LENGTH_LONG).show()
             }else if(TextUtils.isEmpty(etEmail.text.toString())){
-                Toast.makeText(this@RegistrationLibraryActivity,"Please enter last name", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@RegistrationLibraryActivity,"Please enter email id", Toast.LENGTH_LONG).show()
             }else if(TextUtils.isEmpty(etMobile.text.toString())){
-                Toast.makeText(this@RegistrationLibraryActivity,"Please enter date of birth", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@RegistrationLibraryActivity,"Please enter mobile number", Toast.LENGTH_LONG).show()
             }else {
-                ProgressDialog.showProgressBar(this@RegistrationLibraryActivity)
-                val otp = getOTP()
-                Mailer.sendMail(
-                    binding?.etEmail?.text.toString(),
-                    "Forgot Password KOHA",
-                    "Your OTP is $otp"
-                ).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            var requestModel = RegisterUserRequestModel()
-                            requestModel.run{
-                                firstname = intent.getStringExtra(Constant.FIRST_NAME)
-                                surname = intent.getStringExtra(Constant.LAST_NAME)
-                                dateOfBirth = intent.getStringExtra(Constant.DOB)
-                                address = intent.getStringExtra(Constant.ADDRESS)
-                                gender = intent.getStringExtra(Constant.GENDER)
-                                cardnumber = etCardNumber.text.toString()
-                                email = etEmail.text.toString()
-                                mobile = etMobile.text.toString()
-                                libraryId = library
-                                categoryId = category
-                            }
-                            Log.d("OTP",otp)
-                            ProgressDialog.hideProgressBar()
-                            showToast("OTP has been sent")
-                            RegistrationOtpFragment.newInstance(requestModel,otp,object :RegistrationOtpFragment.OnActionCompleteListener{
-                                override fun onActionComplete(registerUserRequestModel: RegisterUserRequestModel) {
-                                    viewModel.registerUser(requestModel)
-                                }
-
-                            })
-                                .show(supportFragmentManager, "OTPFragment")
-                        }, {
-                            showToast("$it")
-                        }
-                    )
+                var query = "{\"email\":{\"-like\":\"${etEmail.text.trim()}\"}}"
+                viewModel.getUserDetailByEmail(query)
             }
         }
     }

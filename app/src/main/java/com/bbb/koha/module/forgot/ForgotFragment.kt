@@ -67,8 +67,15 @@ class ForgotFragment : BaseBottomSheetDialogFragment() {
                     ProgressDialog.hideProgressBar()
                     if(response?.data?.isNotEmpty() == true) {
                         //sendMailOrSMS(response?.data?.get(0)?.patronId)
-                        OTPFragment.newInstance(response?.data?.get(0)?.patronId,type,"")
-                            .show(requireFragmentManager(), "OTPFragment")
+                        dismiss()
+                        if(type == Constant.VerificationType.EMAIL){
+                            OTPFragment.newInstance(response?.data?.get(0)?.patronId,type,binding.etEmail.text.toString())
+                                .show(requireFragmentManager(), "OTPFragment")
+                        }else if(type == Constant.VerificationType.MOBILE){
+                            OTPFragment.newInstance(response?.data?.get(0)?.patronId,type,binding.etMobile.text.toString())
+                                .show(requireFragmentManager(), "OTPFragment")
+                        }
+
                     }else showToast(getString(R.string.no_result_found))
                 }
                 is Resource.Loading -> {
@@ -112,7 +119,10 @@ class ForgotFragment : BaseBottomSheetDialogFragment() {
         binding?.run {
             when (view?.id) {
                 tvSkip.id->{dismiss()}
-                btnSubmit.id->validate()
+                btnSubmit.id->{
+                    hideKeyboard(view)
+                    validate()
+                }
 
             }
         }

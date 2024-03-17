@@ -27,6 +27,7 @@ import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenRequest
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenResponse
 import com.bbb.koha.module.my_account.charges.model.UserBillDataRequest
 import com.bbb.koha.module.my_account.charges.model.UserBillDataResponse
+import com.bbb.koha.module.otp.OTPResponse
 import com.bbb.koha.tracking.MobileTrackResponseModel
 import retrofit2.Response
 import retrofit2.http.*
@@ -175,6 +176,9 @@ interface Apis {
 
     @POST
     suspend fun getUserBillData(@Url url:String,@Body userBillDataRequest: UserBillDataRequest): Response<UserBillDataResponse>
+
+    @POST
+    suspend fun sendOTP(@Url url:String,@QueryMap body: Map<String, String>): Response<OTPResponse>
 
     /*@POST("signup")
     suspend fun signup(@Body signupRequestModel: SignupRequestModel): Response<SignUpResponseModel>

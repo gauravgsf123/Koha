@@ -78,6 +78,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etMobile" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down_arrow"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintTop_toTopOf="@+id/spinnerLibrary"
+                    app:layout_constraintBottom_toBottomOf="@+id/spinnerLibrary"
+                    app:layout_constraintEnd_toEndOf="@+id/spinnerLibrary"/>
+
                 <Spinner
                     android:id="@+id/spinnerCategory"
                     android:layout_width="match_parent"
@@ -90,6 +99,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinnerLibrary" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down_arrow"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintTop_toTopOf="@+id/spinnerCategory"
+                    app:layout_constraintBottom_toBottomOf="@+id/spinnerCategory"
+                    app:layout_constraintEnd_toEndOf="@+id/spinnerCategory"/>
 
                 <Button
                     android:id="@+id/btnRegister"

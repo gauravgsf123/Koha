@@ -14,4 +14,5 @@ class RegistrationRepository {
     suspend fun registerUser(requestModel: RegisterUserRequestModel) = RetrofitInstance.apiService?.registerUser(requestModel)
     suspend fun getLibraries() = RetrofitInstance.apiService?.getLibraries()
     suspend fun getCategory() = RetrofitInstance.apiService?.getCategory()
+    suspend fun getUserDetailByEmail(query: String) = RetrofitInstance.apiService?.getUserDetailByEmail(query)
 }

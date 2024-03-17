@@ -33,6 +33,7 @@ import com.bbb.koha.module.dashboard.fragment.SearchListFragment
 import com.bbb.koha.module.my_account.change_password.ChangePasswordFragment
 import com.bbb.koha.module.my_account.charges.ChargesFragment
 import com.bbb.koha.module.my_account.discharge.DischargeFragment
+import com.bbb.koha.module.my_account.my_qr_code.QRCodeFragment
 import com.bbb.koha.module.my_account.personal_detail.PersonalDetailMainFragment
 import com.bbb.koha.module.my_account.purchase_suggestions.PurchaseSuggestionListFragment
 import com.bbb.koha.module.my_account.reading_history.ReadingHistoryFragment
@@ -121,6 +122,7 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
                 tvCharge.id -> loginUser(ChargesFragment())
                 tvChangePassword.id -> loginUser(ChangePasswordFragment())
                 tvPurchaseSuggestions.id -> loginUser(PurchaseSuggestionListFragment())
+                tvMyQRCode.id -> loginUser(QRCodeFragment())
                 tvDischarge.id -> loginUser(DischargeFragment())
                 tvAboutUs.id -> loginUser(AboutLibraryFragment())
                 tvRulesRegulation.id -> loginUser(RulesAndRegulationFragment())
@@ -323,6 +325,7 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
             tvCharge.setOnClickListener(this@DashboardActivity)
             tvChangePassword.setOnClickListener(this@DashboardActivity)
             tvPurchaseSuggestions.setOnClickListener(this@DashboardActivity)
+            tvMyQRCode.setOnClickListener(this@DashboardActivity)
             consAboutApp.setOnClickListener(this@DashboardActivity)
             consSetting.setOnClickListener(this@DashboardActivity)
             consFolderSearch.setOnClickListener(this@DashboardActivity)

@@ -30,6 +30,8 @@ class RegistrationViewModel(var app: Application) : ViewModel() {
     var allCategoryResponseModel: LiveData<Resource<List<AllCategoryResponseModel>>> = mAllCategoryResponseModel
     private var mRegisterUserRequestModel = MutableLiveData<Resource<RegisterUserResponseModel>>()
     var registerUserRequestModel: LiveData<Resource<RegisterUserResponseModel>> = mRegisterUserRequestModel
+    private var mUserDetailResponseModel = MutableLiveData<Resource<List<UserDetailResponseModel>>>()
+    var userDetailResponseModel: LiveData<Resource<List<UserDetailResponseModel>>> = mUserDetailResponseModel
 
 
     fun getLibraries() {
@@ -92,6 +94,29 @@ class RegistrationViewModel(var app: Application) : ViewModel() {
             }
         }
         // }
+        return Resource.Error(response.message())
+    }
+
+    fun getUserDetailByEmail(query:String) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mUserDetailResponseModel.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.getUserDetailByEmail(query)
+                mUserDetailResponseModel.value = response?.let { handleUserDetailResponse(it) }
+            }
+        } else mUserDetailResponseModel.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handleUserDetailResponse(response: Response<List<UserDetailResponseModel>>): Resource<List<UserDetailResponseModel>>? {
+        //if (response.isSuccessful) {
+        response.body()?.let {
+            return when (response.code()) {
+                200 -> Resource.Success("Success",it)
+                else -> Resource.Error(app.getString(R.string.some_thing_went_wrong))
+            }
+        }
+        //}
         return Resource.Error(response.message())
     }
 

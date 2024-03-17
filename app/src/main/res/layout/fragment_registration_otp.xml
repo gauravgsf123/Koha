@@ -65,19 +65,45 @@
             app:pinBackground="@drawable/pinview_background"
             app:pinLength="4" />
 
+        <TextView
+            android:id="@+id/tvDontReceive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/textview_light"
+            android:gravity="center"
+            android:text="@string/didin_t_receive_otp"
+            app:layout_constraintTop_toBottomOf="@+id/pinview"
+            android:textSize="12sp" />
+
         <Button
-            android:id="@+id/btnContinue"
+            android:id="@+id/btnResend"
+            style="@style/button_border"
             android:layout_width="0dp"
             android:layout_height="@dimen/_44sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="@string/continue_"
+            android:background="@drawable/shape_button_with_border"
+            android:layout_marginEnd="10dp"
+            android:text="Resend In 30"
+            android:enabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/btnContinue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tvOTPDetail"
+            app:layout_constraintTop_toBottomOf="@+id/tvDontReceive" />
+
+        <Button
+            android:id="@+id/btnContinue"
             style="@style/button"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/button_background"
-            app:layout_constraintEnd_toEndOf="@id/pinview"
-            app:layout_constraintStart_toStartOf="@+id/pinview"
-            app:layout_constraintTop_toBottomOf="@+id/pinview" />
+            android:text="@string/continue_"
+            android:layout_marginStart="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/tvOTPDetail"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnResend"
+            app:layout_constraintTop_toBottomOf="@+id/tvDontReceive" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
