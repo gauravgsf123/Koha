@@ -133,7 +133,7 @@ class OTPFragment : BaseBottomSheetDialogFragment(), VerificationListener {
             .setVerifyWithoutOtp(true) //direct verification while connect with mobile network
             .setAutoVerification(activity) //Auto read otp from Sms And Verify
             .setSenderId("BESTBB")
-            .setMessage("$otp is Your verification digits test.")
+            .setMessage("$otp is Your verification digits.")
             .setOtpLength(OTP_LNGTH)
             .setVerificationCallBack(this).build()
 
