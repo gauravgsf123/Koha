@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:layout_margin="8dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/shape_rounded_background_white"
+            tools:context=".module.my_account.personal_detail.fragment.PersonalDetailsFragment">
+
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_icon"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/tvSalutationTitle"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="14dp"
+                android:text="Salutation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clSalutation"
+                android:layout_width="100dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvSalutationTitle">
+
+                <Spinner
+                    android:id="@+id/spinnerSalutation"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:background="@null"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/drop_down_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/tvFirstName"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="First Name*"
+                app:layout_constraintEnd_toEndOf="@+id/tvSalutationTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/clSalutation" />
+
+            <EditText
+                android:id="@+id/etFirstName"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/first_name"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvFirstName"
+                app:layout_constraintStart_toStartOf="@+id/tvFirstName"
+                app:layout_constraintTop_toBottomOf="@+id/tvFirstName" />
+
+
+            <TextView
+                android:id="@+id/tvMiddleName"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Middle Name"
+                app:layout_constraintEnd_toEndOf="@+id/tvSalutationTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+
+            <EditText
+                android:id="@+id/etMiddlename"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/middle_name"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvMiddleName"
+                app:layout_constraintStart_toStartOf="@+id/tvMiddleName"
+                app:layout_constraintTop_toBottomOf="@+id/tvMiddleName" />
+
+
+            <TextView
+                android:id="@+id/tvSurname"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Surname*"
+                app:layout_constraintEnd_toEndOf="@+id/tvSalutationTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/etMiddlename" />
+
+            <EditText
+                android:id="@+id/etSurname"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/surname"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvSurname"
+                app:layout_constraintStart_toStartOf="@+id/tvSurname"
+                app:layout_constraintTop_toBottomOf="@+id/tvSurname" />
+
+
+            <TextView
+                android:id="@+id/tvDateOFBirth"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Date of Birth"
+                app:layout_constraintEnd_toEndOf="@+id/tvSalutationTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/etSurname" />
+
+            <EditText
+                android:id="@+id/etDOB"
+                style="@style/edittext"
+                android:background="@drawable/edittext_background"
+                android:layout_width="0dp"
+                android:hint="@string/dob"
+                android:maxLines="1"
+                android:paddingEnd="15dp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:enabled="false"
+                android:focusableInTouchMode="false"
+                android:drawableRight="@drawable/ic_calendar"
+                app:layout_constraintEnd_toEndOf="@+id/tvDateOFBirth"
+                app:layout_constraintStart_toStartOf="@+id/tvDateOFBirth"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateOFBirth" />
+
+
+            <TextView
+                android:id="@+id/tvGender"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Gender"
+                app:layout_constraintEnd_toEndOf="@+id/tvSalutationTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/etDOB" />
+
+            <RadioGroup
+                android:id="@+id/rgGender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/tvGender"
+                app:layout_constraintStart_toStartOf="@+id/tvGender"
+                app:layout_constraintTop_toBottomOf="@+id/tvGender">
+
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="@string/female" />
+
+                <RadioButton
+                    android:id="@+id/rbOther"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="@string/other" />
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnPrevious"
+                style="@style/button_border"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/shape_button_with_border"
+                android:layout_marginEnd="10dp"
+                android:text="@string/previous"
+                app:layout_constraintEnd_toStartOf="@+id/btnNext"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvSalutationTitle"
+                app:layout_constraintTop_toBottomOf="@+id/rgGender" />
+
+            <Button
+                android:id="@+id/btnNext"
+                style="@style/button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/button_background"
+                android:text="@string/next"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/tvSalutationTitle"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnPrevious"
+                app:layout_constraintTop_toBottomOf="@+id/rgGender" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

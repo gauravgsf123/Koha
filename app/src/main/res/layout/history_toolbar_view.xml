@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottom_corners">
+
+        <RelativeLayout
+            android:id="@+id/rlBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rounded_corner_white"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingEnd="5dp"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="ABC Library"
+            style="@style/textview_medium"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/rlBack"
+            app:layout_constraintStart_toEndOf="@+id/rlBack"
+            app:layout_constraintTop_toTopOf="@+id/rlBack" />
+        
+        <TextView
+            android:id="@+id/tvCheckoutHistory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/your_checkout_history"
+            style="@style/textview_medium"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="@+id/rlBack"
+            app:layout_constraintTop_toBottomOf="@+id/rlBack"/>
+        
+        <Button
+            android:id="@+id/btnCreateNew"
+            android:layout_width="100dp"
+            android:layout_height="36dp"
+            android:background="@drawable/shape_button_background"
+            android:backgroundTint="@color/white"
+            android:text="@string/create_new"
+            style="@style/textview_regular"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text_hyperlink_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toTopOf="@+id/tvCheckoutHistory"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCheckoutHistory"/>
+
+        <TextView
+            android:id="@+id/tvShowingResult"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Showing last 50 items"
+            style="@style/textview_list_item"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/tvCheckoutHistory"
+            app:layout_constraintTop_toBottomOf="@+id/tvCheckoutHistory"/>
+
+        <TextView
+            android:id="@+id/tvShowAllResult"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Show All History"
+            style="@style/textview_list_item"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCheckoutHistory"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvShowingResult">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/shape_rounded_background_white"
+                android:elevation="4dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/filter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="1dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/search" />
+
+                    <EditText
+                        android:id="@+id/editTextSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Search By Keywords"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/imageViewClear"
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/cross"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:layout_constraintTop_toTopOf="@+id/editTextSearch"
+                        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
+                        app:layout_constraintStart_toEndOf="@+id/editTextSearch"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="4dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:src="@drawable/voice" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/filter"
+                android:layout_width="25dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/filter"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cardView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

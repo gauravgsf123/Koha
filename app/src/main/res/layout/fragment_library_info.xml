@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context=".library.fragments.LibraryInfoFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/shape_rounded_background_white">
+
+        <TextView
+            android:id="@+id/tvLibraryCard"
+            style="@style/textview_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="30dp"
+            android:text="Library Card Number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/etCardNumber"
+            style="@style/edittext"
+            android:background="@drawable/edittext_background"
+            android:layout_width="0dp"
+            android:hint="@string/card_number"
+            android:layout_marginTop="9dp"
+            app:layout_constraintStart_toStartOf="@+id/tvLibraryCard"
+            app:layout_constraintEnd_toEndOf="@+id/tvLibraryCard"
+            app:layout_constraintTop_toBottomOf="@+id/tvLibraryCard" />
+
+
+        <TextView
+            android:id="@+id/tvUserName"
+            style="@style/textview_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="User Name"
+            app:layout_constraintStart_toStartOf="@+id/tvLibraryCard"
+            app:layout_constraintEnd_toEndOf="@+id/tvLibraryCard"
+            app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
+
+        <TextView
+            android:id="@+id/etUsername"
+            style="@style/edittext"
+            android:background="@drawable/edittext_background"
+            android:layout_width="0dp"
+            android:hint="@string/user_name"
+            android:layout_marginTop="9dp"
+            app:layout_constraintStart_toStartOf="@+id/tvUserName"
+            app:layout_constraintEnd_toEndOf="@+id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+
+        <TextView
+            android:id="@+id/tvExpirationDate"
+            style="@style/textview_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Expiration Date"
+            app:layout_constraintStart_toStartOf="@+id/tvLibraryCard"
+            app:layout_constraintEnd_toEndOf="@+id/tvLibraryCard"
+            app:layout_constraintTop_toBottomOf="@+id/etUsername" />
+
+        <LinearLayout
+            android:id="@+id/lnrDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintStart_toStartOf="@+id/tvExpirationDate"
+            app:layout_constraintEnd_toEndOf="@+id/tvExpirationDate"
+            app:layout_constraintTop_toBottomOf="@+id/tvExpirationDate">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/edittext_background"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="19dp"
+                    android:fontFamily="@font/roboto"
+                    android:padding="5dp"
+                    android:text="Day"
+                    android:textColor="@color/text_color_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/drop_down_arrow"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/edittext_background"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="19dp"
+                    android:fontFamily="@font/roboto"
+                    android:padding="5dp"
+                    android:text="Month"
+                    android:textColor="@color/text_color_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/drop_down_arrow"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/edittext_background"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="19dp"
+                    android:fontFamily="@font/roboto"
+                    android:padding="5dp"
+                    android:text="Year"
+                    android:textColor="@color/text_color_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/drop_down_arrow"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHomeLibrary"
+            style="@style/textview_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/home_library"
+            app:layout_constraintStart_toStartOf="@+id/tvLibraryCard"
+            app:layout_constraintEnd_toEndOf="@+id/tvLibraryCard"
+            app:layout_constraintTop_toBottomOf="@+id/lnrDate" />
+
+        <TextView
+            android:id="@+id/etLibrary"
+            style="@style/edittext"
+            android:background="@drawable/edittext_background"
+            android:layout_width="0dp"
+            android:hint="@string/select_library"
+            android:layout_marginTop="9dp"
+            app:layout_constraintStart_toStartOf="@+id/tvHomeLibrary"
+            app:layout_constraintEnd_toEndOf="@+id/tvHomeLibrary"
+            app:layout_constraintTop_toBottomOf="@+id/tvHomeLibrary" />
+        <TextView
+            android:id="@+id/tvCategory"
+            style="@style/textview_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Category"
+            app:layout_constraintStart_toStartOf="@+id/tvLibraryCard"
+            app:layout_constraintEnd_toEndOf="@+id/tvLibraryCard"
+            app:layout_constraintTop_toBottomOf="@+id/etLibrary" />
+
+
+        <TextView
+            android:id="@+id/etCategory"
+            style="@style/edittext"
+            android:background="@drawable/edittext_background"
+            android:layout_width="0dp"
+            android:hint="@string/select_category"
+            android:layout_marginTop="9dp"
+            app:layout_constraintStart_toStartOf="@+id/tvCategory"
+            app:layout_constraintEnd_toEndOf="@+id/tvCategory"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategory" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/next"
+            android:background="@drawable/button_background"
+            style="@style/button"
+            app:layout_constraintEnd_toEndOf="@id/etCategory"
+            app:layout_constraintStart_toStartOf="@+id/etCategory"
+            app:layout_constraintTop_toBottomOf="@+id/etCategory" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+</layout>

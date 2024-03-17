@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp"
+            tools:context=".module.dashboard.bottomsheet.AdvanceFilterFragment">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="160dp"
+                android:layout_height="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/textview_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/roboto_black"
+                android:text="@string/advance_search"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <ImageView
+                android:id="@+id/ivClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cross"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvBookLibrary"
+                style="@style/textview_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/book_library"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvBookCategory"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvBookCategory"
+                style="@style/textview_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/book_category"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvBookLibrary"
+                app:layout_constraintTop_toTopOf="@+id/tvBookLibrary" />
+
+            <Spinner
+                android:id="@+id/spinnerBookLibrary"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintEnd_toEndOf="@+id/tvBookLibrary"
+                app:layout_constraintStart_toStartOf="@+id/tvBookLibrary"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookLibrary" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerBookLibrary"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerBookLibrary"
+                app:layout_constraintTop_toTopOf="@+id/spinnerBookLibrary" />
+
+            <Spinner
+                android:id="@+id/spinnerBookCategory"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintEnd_toEndOf="@+id/tvBookCategory"
+                app:layout_constraintStart_toStartOf="@+id/tvBookCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookCategory" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerBookCategory"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerBookCategory"
+                app:layout_constraintTop_toTopOf="@+id/spinnerBookCategory" />
+
+            <TextView
+                android:id="@+id/tvAdvanceSearchItem"
+                style="@style/textview_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/advance_search_items_where"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerBookCategory" />
+
+            <Spinner
+                android:id="@+id/spinnerSearchBy"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintEnd_toEndOf="@+id/tvBookCategory"
+                app:layout_constraintStart_toStartOf="@+id/tvBookLibrary"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdvanceSearchItem" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_down_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerSearchBy"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerSearchBy"
+                app:layout_constraintTop_toTopOf="@+id/spinnerSearchBy" />
+
+            <Spinner
+                android:id="@+id/spinnerContains"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintEnd_toEndOf="@+id/tvBookCategory"
+                app:layout_constraintStart_toStartOf="@+id/tvBookCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdvanceSearchItem" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_down_arrow"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerContains"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerContains"
+                app:layout_constraintTop_toTopOf="@+id/spinnerContains" />
+
+            <EditText
+                android:id="@+id/etSearch"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/search_text"
+                android:inputType="text"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerSearchBy" />
+
+            <RadioGroup
+                android:id="@+id/rgType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/etSearch"
+                app:layout_constraintStart_toStartOf="@+id/etSearch"
+                app:layout_constraintTop_toBottomOf="@+id/etSearch">
+
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/and" />
+
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="@string/or" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rgType" />
+
+            <TextView
+                android:id="@+id/tvAddMore"
+                style="@style/textview_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/add_more"
+                android:textColor="@color/text_hyperlink_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/etSearch"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+            <TextView
+                android:id="@+id/tvDateRange"
+                style="@style/textview_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/date_range"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddMore" />
+
+            <EditText
+                android:id="@+id/etDateFrom"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/date_from"
+                android:layout_marginEnd="8dp"
+                android:maxLines="1"
+                android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@+id/etDateTo"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateRange" />
+
+            <EditText
+                android:id="@+id/etDateTo"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/date_to"
+                android:layout_marginStart="8dp"
+                android:maxLines="1"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintStart_toEndOf="@+id/etDateFrom"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateRange" />
+
+            <TextView
+                android:id="@+id/tvDateExample"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/for_example_1999_2001"
+                android:textColor="@color/text_color_secondary"
+                app:layout_constraintEnd_toEndOf="@+id/etDateTo"
+                app:layout_constraintStart_toStartOf="@+id/etDateFrom"
+                app:layout_constraintTop_toBottomOf="@+id/etDateFrom" />
+
+            <CheckBox
+                android:id="@+id/cbLoan"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:text="@string/only_items_currently_available_for_loan"
+                app:layout_constraintEnd_toEndOf="@+id/tvDateExample"
+                app:layout_constraintStart_toStartOf="@+id/tvDateExample"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateExample" />
+
+            <Button
+                android:id="@+id/btnSearch"
+                style="@style/button_border"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/shape_button_with_border"
+                android:text="@string/search"
+                app:layout_constraintEnd_toStartOf="@+id/btnReset"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/etSearch"
+                app:layout_constraintTop_toBottomOf="@+id/cbLoan" />
+
+            <Button
+                android:id="@+id/btnReset"
+                style="@style/button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_background"
+                android:text="@string/reset"
+                app:layout_constraintEnd_toEndOf="@+id/etSearch"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnSearch"
+                app:layout_constraintTop_toBottomOf="@+id/cbLoan" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

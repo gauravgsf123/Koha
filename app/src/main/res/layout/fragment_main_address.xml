@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/shape_rounded_background_white"
+            tools:context=".library.fragments.MainAddressFragment">
+
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_icon"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvAddress"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="30dp"
+                android:text="Address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <EditText
+                android:id="@+id/etAddress"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/address"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+
+            <TextView
+                android:id="@+id/tvAddress2"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Address 2"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@id/etAddress" />
+
+
+            <EditText
+                android:id="@+id/etAddress2"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/address"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress2"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress2"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress2" />
+
+
+            <TextView
+                android:id="@+id/tvCityTitle"
+                style="@style/textview_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/city"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@id/etAddress2" />
+
+            <EditText
+                android:id="@+id/etCity"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/city"
+                android:layout_marginEnd="8dp"
+                android:enabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/etState"
+                app:layout_constraintStart_toStartOf="@+id/tvCityTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvCityTitle" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCity"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintEnd_toStartOf="@+id/clState"
+                app:layout_constraintStart_toStartOf="@+id/tvCityTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvCityTitle">
+
+                <EditText
+                    android:id="@+id/tvCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="19dp"
+                    android:fontFamily="@font/roboto"
+                    android:padding="5dp"
+                    android:text="City"
+                    android:background="@null"
+                    android:textColor="@color/text_color_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="gone"
+                    android:src="@drawable/drop_down_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/tvStateTitle"
+                style="@style/textview_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:text="@string/state"
+                app:layout_constraintStart_toStartOf="@id/etState"
+                app:layout_constraintTop_toTopOf="@+id/tvCityTitle" />
+            <EditText
+                android:id="@+id/etState"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/state"
+                android:enabled="false"
+                app:layout_constraintStart_toEndOf="@+id/etCity"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/tvStateTitle" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clState"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                android:background="@drawable/edittext_background"
+                app:layout_constraintStart_toEndOf="@+id/clCity"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/tvStateTitle">
+
+                <TextView
+                    android:id="@+id/tvState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="19dp"
+                    android:fontFamily="@font/roboto"
+                    android:padding="5dp"
+                    android:text="State"
+                    android:textColor="@color/text_color_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/drop_down_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvZipCodeTitle"
+                style="@style/textview_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/zip_postal_code"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@id/etCity" />
+
+
+            <EditText
+                android:id="@+id/etZipCode"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:inputType="number"
+                android:maxLength="8"
+                android:enabled="false"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/zip_postal_code"
+                app:layout_constraintEnd_toStartOf="@+id/etCountry"
+                app:layout_constraintStart_toStartOf="@+id/tvZipCodeTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvZipCodeTitle" />
+
+
+            <TextView
+                android:id="@+id/tvCountryTitle"
+                style="@style/textview_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/country"
+                app:layout_constraintStart_toStartOf="@+id/etCountry"
+                app:layout_constraintTop_toTopOf="@+id/tvZipCodeTitle" />
+
+
+            <EditText
+                android:id="@+id/etCountry"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/country"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+                app:layout_constraintStart_toEndOf="@+id/etZipCode"
+                app:layout_constraintTop_toBottomOf="@+id/tvZipCodeTitle" />
+
+
+            <Button
+                android:id="@+id/btnPrevious"
+                style="@style/button_border"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/shape_button_with_border"
+                android:layout_marginEnd="10dp"
+                android:text="@string/previous"
+                app:layout_constraintEnd_toStartOf="@+id/btnNext"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/etCountry" />
+
+            <Button
+                android:id="@+id/btnNext"
+                style="@style/button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/button_background"
+                android:text="@string/next"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnPrevious"
+                app:layout_constraintTop_toBottomOf="@+id/etCountry" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</layout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="136dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="180dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivBookCover"
+                android:layout_width="match_parent"
+                android:layout_height="131dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/no_image_available"/>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:gravity="center"
+                android:layout_marginTop="7dp"
+                style="@style/textview_medium"
+                app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+                app:layout_constraintTop_toBottomOf="@id/ivBookCover"
+                app:layout_constraintStart_toStartOf="@id/ivBookCover"
+                android:text="The story of my..."/>
+            <TextView
+                android:id="@+id/tvWriterName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/textview"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Bhagat, Chetan"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

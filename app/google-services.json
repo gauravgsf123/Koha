@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "20774476331",
+    "project_id": "kohl-6a213",
+    "storage_bucket": "kohl-6a213.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20774476331:android:9d8d2e0d769ffdbdcde86e",
+        "android_client_info": {
+          "package_name": "com.bbb.koha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMk3p7tG5-2Vs0TL5Fn7hkFxxC0tx9FQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_20sdp"
+        tools:context=".module.dashboard.bottomsheet.PlaceHoldsFragment">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="160dp"
+            android:layout_height="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@color/gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/placing_a_hold"
+            style="@style/textview_title"
+            android:textColor="@color/black"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:fontFamily="@font/roboto_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cross"
+            app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"/>
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:checked="true"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
+
+        <TextView
+            android:id="@+id/tvHoldsOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Place a hold on"
+            style="@style/textview"
+            android:textSize="14sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toTopOf="@+id/checkbox"
+            app:layout_constraintStart_toEndOf="@+id/checkbox"/>
+
+        <TextView
+            android:id="@+id/tvBookTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The agrarian system of Mughal India 1556-1707"
+            style="@style/textview_bold"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvHoldsOn"
+            app:layout_constraintStart_toStartOf="@+id/tvHoldsOn"/>
+
+        <TextView
+            android:id="@+id/tvBookAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By: Habib, Irfan"
+            style="@style/textview"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvBookTitle"/>
+
+        <TextView
+            android:id="@+id/tvHomeLibrary"
+            style="@style/textview_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color_secondary"
+            android:text="Pick up locations:"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintEnd_toEndOf="@+id/ivClose"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
+
+        <Spinner
+            android:id="@+id/spinnerBookLibrary"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            style="@style/edittext"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintEnd_toEndOf="@+id/tvHomeLibrary"
+            app:layout_constraintStart_toStartOf="@+id/tvHomeLibrary"
+            app:layout_constraintTop_toBottomOf="@+id/tvHomeLibrary" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_down_arrow"
+            android:layout_marginEnd="25dp"
+            app:layout_constraintTop_toTopOf="@+id/spinnerBookLibrary"
+            app:layout_constraintBottom_toBottomOf="@+id/spinnerBookLibrary"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerBookLibrary"/>
+
+        <Button
+            android:id="@+id/btnShowHide"
+            style="@style/button"
+            android:layout_width="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:text="@string/show_hide_more_options"
+            app:layout_constraintStart_toStartOf="@+id/spinnerBookLibrary"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerBookLibrary"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerBookLibrary" />
+
+        <TextView
+            android:id="@+id/tvHoldNotNeeded"
+            style="@style/textview_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color_secondary"
+            android:text="Hold not needed after"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/btnShowHide"
+            app:layout_constraintEnd_toEndOf="@+id/btnShowHide"
+            app:layout_constraintTop_toBottomOf="@+id/btnShowHide" />
+
+        <EditText
+            android:id="@+id/etDate"
+            style="@style/edittext"
+            android:background="@drawable/edittext_background"
+            android:layout_width="0dp"
+            android:hint="@string/dd_mm_yyyy"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:paddingEnd="15dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:drawableRight="@drawable/ic_calendar"
+            app:layout_constraintStart_toStartOf="@+id/tvHoldNotNeeded"
+            app:layout_constraintEnd_toEndOf="@+id/tvHoldNotNeeded"
+            app:layout_constraintTop_toBottomOf="@+id/tvHoldNotNeeded" />
+
+        <Button
+            android:id="@+id/btnConfirmHold"
+            style="@style/button"
+            android:layout_width="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:text="@string/confirm_hold"
+            app:layout_constraintStart_toStartOf="@+id/btnShowHide"
+            app:layout_constraintEnd_toEndOf="@+id/btnShowHide"
+            app:layout_constraintTop_toBottomOf="@+id/etDate" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

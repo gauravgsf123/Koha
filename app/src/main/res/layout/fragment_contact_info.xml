@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_rounded_background_white"
+            android:paddingBottom="20dp"
+            tools:context=".library.fragments.ContactInfoFragment">
+
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_edit_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="14dp"
+                android:text="Primary Phone*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <EditText
+                android:id="@+id/etPrimaryPhone"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+
+            <TextView
+                android:id="@+id/tvSecondaryPhone"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Secondary Phone"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/etPrimaryPhone" />
+
+
+            <EditText
+                android:id="@+id/etSecondaryPhone"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/secondry_phone_number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvSecondaryPhone" />
+
+
+            <TextView
+                android:id="@+id/tvPrimaryEmailId"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Primary Email Id*"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/etSecondaryPhone" />
+
+            <EditText
+                android:id="@+id/etPrimaryEmail"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/primary_email"
+                android:enabled="false"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvPrimaryEmailId" />
+
+            <TextView
+                android:id="@+id/tvSecondaryEmailId"
+                style="@style/textview_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Secondary Email Id"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/etPrimaryEmail" />
+
+
+            <EditText
+                android:id="@+id/etSecondaryEmail"
+                style="@style/edittext"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/secondary_email"
+                android:enabled="false"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="@+id/tvPhone"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvSecondaryEmailId" />
+
+
+            <Button
+                android:id="@+id/btnPrevious"
+                style="@style/button_border"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/shape_button_with_border"
+                android:layout_marginEnd="10dp"
+                android:text="@string/cancel"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/btnNext"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/etSecondaryEmail"
+                app:layout_constraintTop_toBottomOf="@+id/etSecondaryEmail" />
+
+            <Button
+                android:id="@+id/btnNext"
+                style="@style/button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/button_background"
+                android:text="@string/previous"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/etSecondaryEmail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnPrevious"
+                app:layout_constraintTop_toBottomOf="@+id/etSecondaryEmail" />
+
+            <Button
+                style="@style/button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/button_background"
+                android:text="@string/previous"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/etSecondaryEmail"
+                app:layout_constraintStart_toStartOf="@+id/etSecondaryEmail"
+                app:layout_constraintTop_toBottomOf="@+id/etSecondaryEmail" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

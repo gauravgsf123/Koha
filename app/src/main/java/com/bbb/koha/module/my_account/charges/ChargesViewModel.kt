@@ -1,0 +1,99 @@
+package com.bbb.koha.module.my_account.charges
+
+import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bbb.koha.R
+import com.bbb.koha.login.model.UserDetailResponseModel
+import com.bbb.koha.login.model.ValidateUserRequestModel
+import com.bbb.koha.login.model.ValidateUserResponseModel
+import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenRequest
+import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenResponse
+import com.bbb.koha.module.my_account.charges.model.UserBillDataRequest
+import com.bbb.koha.module.my_account.charges.model.UserBillDataResponse
+import com.bbb.koha.network.Resource
+import com.bbb.koha.utils.Utils
+import kotlinx.coroutines.launch
+import retrofit2.Response
+
+class ChargesViewModel(var app: Application) : ViewModel() {
+    @SuppressLint("StaticFieldLeak")
+    private var mContext: Context = app.applicationContext
+    private val repository = ChargesRepository()
+    private var mChargesResponseModel = MutableLiveData<Resource<List<ChargesResponseModel>>>()
+    var chargesResponseModel: LiveData<Resource<List<ChargesResponseModel>>> = mChargesResponseModel
+    private var mMerchantauthtokenResponse = MutableLiveData<Resource<MerchantauthtokenResponse>>()
+    var merchantauthtokenResponse: LiveData<Resource<MerchantauthtokenResponse>> = mMerchantauthtokenResponse
+    private var mUserBillDataResponse = MutableLiveData<Resource<UserBillDataResponse>>()
+    var userBillDataResponse: LiveData<Resource<UserBillDataResponse>> = mUserBillDataResponse
+
+
+    fun getCharges(patronId: Int) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mChargesResponseModel.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.getCharges(patronId)
+                mChargesResponseModel.value = response?.let { handleGetChargesResponse(it) }
+            }
+        } else mChargesResponseModel.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handleGetChargesResponse(response: Response<List<ChargesResponseModel>>): Resource<List<ChargesResponseModel>>? {
+        //if (response.isSuccessful) {
+            response.body()?.let {
+                return when (response.code()) {
+                    200 -> Resource.Success("Success",it)
+                    else -> Resource.Error(response.message())
+                }
+            }
+       // }
+        return Resource.Error(response.message())
+    }
+
+    fun getMerchantAuthToken(url :String, merchantAuthTokenRequest: MerchantauthtokenRequest) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mMerchantauthtokenResponse.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.getMerchantAuthToken(url,merchantAuthTokenRequest)
+                mMerchantauthtokenResponse.value = response?.let { handleMerchantAuthTokenResponse(it) }
+            }
+        } else mMerchantauthtokenResponse.value = Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handleMerchantAuthTokenResponse(response: Response<MerchantauthtokenResponse>): Resource<MerchantauthtokenResponse>? {
+        response.body()?.let {
+            return when (response.code()) {
+                200 -> Resource.Success("Success",it)
+                else -> Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun getUserBillData(url :String, userBillDataRequest: UserBillDataRequest) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mUserBillDataResponse.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.getUserBillData(url,userBillDataRequest)
+                mUserBillDataResponse.value = response?.let { handleUserBillDataResponse(it) }
+            }
+        } else mUserBillDataResponse.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handleUserBillDataResponse(response: Response<UserBillDataResponse>): Resource<UserBillDataResponse>? {
+        response.body()?.let {
+            return when (response.code()) {
+                200 -> Resource.Success("Success",it)
+                else -> Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+}
