@@ -14,11 +14,13 @@ import com.bbb.koha.app.BaseBottomSheetDialogFragment
 import com.bbb.koha.common.Constant
 import com.bbb.koha.databinding.FragmentPayBottomSheetBinding
 import com.bbb.koha.login.model.UserDetailResponseModel
+import com.bbb.koha.module.dashboard.DashboardActivity
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenRequest
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenResponse
 import com.bbb.koha.module.my_account.charges.model.UserBillDataRequest
 import com.bbb.koha.network.Resource
 import com.bbb.koha.network.ViewModelFactoryClass
+import com.bbb.koha.payment.MobilPayFragment
 import com.bbb.koha.utils.ProgressDialog
 import com.bbb.koha.utils.Utils
 import com.google.gson.Gson
@@ -101,11 +103,14 @@ class PayBottomSheetFragment(var callBack: ChargesFragment.CallBackInterface) : 
     }
 
     private fun redirectToMobilPay(data: String?) {
-        val viewIntent = Intent(
+        /*val viewIntent = Intent(
             "android.intent.action.VIEW",
             Uri.parse(data)
         )
-        startActivity(viewIntent)
+        startActivity(viewIntent)*/
+        dismiss()
+        data?.let { MobilPayFragment(it) }
+            ?.let { (activity as DashboardActivity).addFragment(it) }
     }
 
     private fun callBillData(data: MerchantauthtokenResponse?) {

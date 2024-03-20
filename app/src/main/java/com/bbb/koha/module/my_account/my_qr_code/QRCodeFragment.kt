@@ -1,6 +1,5 @@
 package com.bbb.koha.module.my_account.my_qr_code
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
