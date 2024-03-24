@@ -1,9 +1,9 @@
 package com.bbb.koha.module.my_account.charges
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +20,7 @@ import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenResponse
 import com.bbb.koha.module.my_account.charges.model.UserBillDataRequest
 import com.bbb.koha.network.Resource
 import com.bbb.koha.network.ViewModelFactoryClass
-import com.bbb.koha.payment.MobilPayFragment
+import com.bbb.koha.module.payment.MobilPayFragment
 import com.bbb.koha.utils.ProgressDialog
 import com.bbb.koha.utils.Utils
 import com.google.gson.Gson
@@ -108,8 +108,9 @@ class PayBottomSheetFragment(var callBack: ChargesFragment.CallBackInterface) : 
             Uri.parse(data)
         )
         startActivity(viewIntent)*/
+
         dismiss()
-        data?.let { MobilPayFragment(it) }
+        data?.let { MobilPayFragment(it,callBack) }
             ?.let { (activity as DashboardActivity).addFragment(it) }
     }
 
@@ -154,13 +155,13 @@ class PayBottomSheetFragment(var callBack: ChargesFragment.CallBackInterface) : 
     private fun validate(){
         if(TextUtils.isEmpty(binding.etAmount.text)){
             showToast(resources.getString(R.string.please_enter_amount))
-        }else if(binding.etAmount.text.toString().toInt() in 401..1){
-            showToast(resources.getString(R.string.please_enter_valid_amount))
-        }else{
+        }else if(binding.etAmount.text.toString().toInt() in 1..totalAmount.toInt()){
             val merchantAuthTokenRequest = MerchantauthtokenRequest(
                 Constant.END_POINT,Constant.KEY,Constant.MERCHANT_ID
             )
             viewModel.getMerchantAuthToken(Constant.MERCHANT_AUTH_URL,merchantAuthTokenRequest)
+        }else{
+            showToast(resources.getString(R.string.please_enter_valid_amount))
         }
     }
 

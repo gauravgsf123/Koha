@@ -25,9 +25,16 @@ import com.bbb.koha.module.set_new_password.SetNewPasswordRequest
 import com.bbb.koha.module.splash_screen.TokenResponse
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenRequest
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenResponse
+import com.bbb.koha.module.my_account.charges.model.PaymentCreditRequest
+import com.bbb.koha.module.my_account.charges.model.PaymentCreditResponse
 import com.bbb.koha.module.my_account.charges.model.UserBillDataRequest
 import com.bbb.koha.module.my_account.charges.model.UserBillDataResponse
+import com.bbb.koha.module.notification.model.NotificationModel
+import com.bbb.koha.module.notification.model.NotificationRequestModel
 import com.bbb.koha.module.otp.OTPResponse
+import com.bbb.koha.module.splash_screen.model.LibraryFeatureResponseModel
+import com.bbb.koha.module.splash_screen.model.LibraryResponseModel
+import com.bbb.koha.module.splash_screen.model.RequestModel
 import com.bbb.koha.tracking.MobileTrackResponseModel
 import retrofit2.Response
 import retrofit2.http.*
@@ -171,6 +178,10 @@ interface Apis {
     @GET("biblios/{biblio_id}/checkouts")
     suspend fun getCheckoutOfBiblio(@Path("biblio_id") biblioId:Int?): List<CheckoutResponseModel>
 
+    @POST("patrons/{patronId}/account/credits")
+    suspend fun paymentCredit(@Path("patronId") checkoutId: Int,
+                              @Body paymentCreditRequest: PaymentCreditRequest): Response<PaymentCreditResponse>
+
     @POST
     suspend fun getMerchantAuthToken(@Url url:String,@Body merchantauthtokenRequest: MerchantauthtokenRequest): Response<MerchantauthtokenResponse>
 
@@ -179,6 +190,17 @@ interface Apis {
 
     @POST
     suspend fun sendOTP(@Url url:String,@QueryMap body: Map<String, String>): Response<OTPResponse>
+    @POST("libraries/view.php")
+    suspend fun getLibraryDetail(@Body requestModel: RequestModel): Response<List<LibraryResponseModel>>
+
+    @POST("lib_features/view.php")
+    suspend fun getLibraryFeature(@Body requestModel: RequestModel): Response<List<LibraryFeatureResponseModel>>
+
+    @POST("notification/add.php")
+    suspend fun addNotification(@Body notificationModel: NotificationModel): Response<List<NotificationModel>>
+
+    @POST("notification/view.php")
+    suspend fun getNotification(@Body notificationRequestModel: NotificationRequestModel): Response<List<NotificationModel>>
 
     /*@POST("signup")
     suspend fun signup(@Body signupRequestModel: SignupRequestModel): Response<SignUpResponseModel>

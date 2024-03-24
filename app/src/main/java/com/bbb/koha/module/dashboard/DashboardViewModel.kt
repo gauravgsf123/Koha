@@ -17,6 +17,8 @@ import com.bbb.koha.module.dashboard.model.PlaceHoldResponseModel
 import com.bbb.koha.module.my_account.purchase_suggestions.model.ItemResponseModel
 import com.bbb.koha.module.my_account.summary.model.BookDetailResponseModel
 import com.bbb.koha.module.my_account.summary.model.CheckoutResponseModel
+import com.bbb.koha.module.notification.model.NotificationModel
+import com.bbb.koha.module.notification.model.NotificationRequestModel
 import com.bbb.koha.module.registration.model.AllCategoryResponseModel
 import com.bbb.koha.module.registration.model.AllLibraryResponseModel
 import com.bbb.koha.network.Resource
@@ -53,6 +55,8 @@ class DashboardViewModel(var app: Application) : ViewModel() {
     var checkoutOfBiblioResponseModel: LiveData<Resource<List<CheckoutResponseModel>>> = mCheckoutOfBiblioResponseModel
     private var mTotalPatrons = MutableLiveData<Resource<List<UserDetailResponseModel>>>()
     var totalPatrons: LiveData<Resource<List<UserDetailResponseModel>>> = mTotalPatrons
+    private var mNotificationRequestModel = MutableLiveData<Resource<List<NotificationModel>>>()
+    var notificationRequestModel: LiveData<Resource<List<NotificationModel>>> = mNotificationRequestModel
 
 
 
@@ -389,6 +393,66 @@ class DashboardViewModel(var app: Application) : ViewModel() {
             }
         }
         //}
+        return Resource.Error(response.message())
+    }
+
+    fun getCheckout(patrons:String) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mCheckoutResponseModel.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.getCheckout(patrons)
+                response?.body()?.forEach { it ->
+                    val itemResponse = repository.getItemDetail(it.itemId!!)
+                    it.itemDetailResponseModel = itemResponse
+                    val bookResponse =repository.getBookDetail(itemResponse?.biblioId!!)
+                    it.bookDetailResponseModel = bookResponse
+
+                }
+                mCheckoutResponseModel.value = response?.let { handleCheckoutResponse(it) }
+            }
+        } else mCheckoutResponseModel.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    fun addNotification(notificationRequestModel: NotificationModel) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mNotificationRequestModel.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.addNotification(notificationRequestModel)
+                mNotificationRequestModel.value = response?.let { handleAddNotificationResponse(it) }
+            }
+        } else mNotificationRequestModel.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handleAddNotificationResponse(response: Response<List<NotificationModel>>): Resource<List<NotificationModel>>? {
+        response.body()?.let {
+            return when (response.code()) {
+                200 -> Resource.Success("Success",it)
+                else -> Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun getNotification(notificationRequestModel: NotificationRequestModel) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mNotificationRequestModel.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.getNotification(notificationRequestModel)
+                mNotificationRequestModel.value = response?.let { handleGetNotificationResponse(it) }
+            }
+        } else mNotificationRequestModel.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handleGetNotificationResponse(response: Response<List<NotificationModel>>): Resource<List<NotificationModel>>? {
+        response.body()?.let {
+            return when (response.code()) {
+                200 -> Resource.Success("Success",it)
+                else -> Resource.Error(response.message())
+            }
+        }
         return Resource.Error(response.message())
     }
 

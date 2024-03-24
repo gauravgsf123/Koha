@@ -13,6 +13,7 @@ import com.bbb.koha.module.my_account.personal_detail.PersonalDetailViewModel
 import com.bbb.koha.module.my_account.purchase_suggestions.SuggestionViewModel
 import com.bbb.koha.module.my_account.reading_history.ReadingHistoryViewModel
 import com.bbb.koha.module.my_account.summary.SummaryDetailViewModel
+import com.bbb.koha.module.notification.NotificationViewModel
 import com.bbb.koha.module.otp.OTPViewModel
 import com.bbb.koha.module.registration.RegistrationViewModel
 import com.bbb.koha.module.reset_password.ResetPasswordViewModel
@@ -65,6 +66,9 @@ class ViewModelFactoryClass(private val app: Application) : ViewModelProvider.Fa
         }
         else if (modelClass.isAssignableFrom(OTPViewModel::class.java)) {
             return OTPViewModel(app) as T
+        }
+        else if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
+            return NotificationViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

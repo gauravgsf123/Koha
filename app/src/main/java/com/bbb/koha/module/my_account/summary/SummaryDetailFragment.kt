@@ -358,7 +358,9 @@ class SummaryDetailFragment : BaseFragment() {
                 adapterPosition: Int,
                 checkoutResponseModel: CheckoutResponseModel
             ) {
-                (activity as DashboardActivity).addFragment(BookDetailFragment(checkoutResponseModel?.bookDetailResponseModel!!))
+                (activity as DashboardActivity).addFragment(
+                    BookDetailFragment(checkoutResponseModel?.bookDetailResponseModel!!)
+                )
             }
         }
         )
@@ -378,11 +380,12 @@ class SummaryDetailFragment : BaseFragment() {
                 adapterPosition: Int,
                 holdsResponseModel: HoldsResponseModel
             ) {
-                (activity as DashboardActivity).addFragment(BookDetailFragment(holdsResponseModel?.bookDetailResponseModel!!))
+                (activity as DashboardActivity).addFragment(
+                    BookDetailFragment(holdsResponseModel?.bookDetailResponseModel!!)
+                )
             }
 
-        }
-        )
+        })
     }
 
     private fun getCheckoutData(list: List<CheckoutResponseModel>,isDue:Boolean): List<CheckoutResponseModel>{

@@ -1,20 +1,31 @@
 package com.bbb.koha.module.dashboard
 
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.icu.text.CaseMap.Title
+import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.RemoteViews
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.bbb.koha.R
 import com.bbb.koha.app.MVVMBindingActivity
 import com.bbb.koha.common.Constant
@@ -38,18 +49,36 @@ import com.bbb.koha.module.my_account.personal_detail.PersonalDetailMainFragment
 import com.bbb.koha.module.my_account.purchase_suggestions.PurchaseSuggestionListFragment
 import com.bbb.koha.module.my_account.reading_history.ReadingHistoryFragment
 import com.bbb.koha.module.my_account.summary.SummaryDetailFragment
+import com.bbb.koha.module.my_account.summary.model.CheckoutResponseModel
+import com.bbb.koha.module.notification.NotificationFragment
+import com.bbb.koha.module.notification.model.NotificationModel
 import com.bbb.koha.module.setting.SettingFragment
+import com.bbb.koha.module.splash_screen.model.RequestModel
+import com.bbb.koha.network.Resource
+import com.bbb.koha.network.ViewModelFactoryClass
+import com.bbb.koha.utils.ProgressDialog
 import com.bbb.koha.utils.Utils
 import com.bbb.koha.view.ConfirmationDialogFragment
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
 class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
     private lateinit var userDetail: UserDetailResponseModel
+    private lateinit var viewModel:DashboardViewModel
+    lateinit var notificationManager: NotificationManager
+    lateinit var notificationChannel: NotificationChannel
+    lateinit var builder: Notification.Builder
+    private val channelId = "i.apps.notifications"
+    private val description = "Test notification"
+    var c: Date? = null
+    var df: SimpleDateFormat? = null
     companion object {
         private const val REQUEST_CODE_STT = 1
     }
@@ -65,6 +94,10 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
     override fun initializeView() {
         onViewClick()
         viewHideGone()
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactoryClass(this.application)
+        )[DashboardViewModel::class.java]
         binding?.homeToolbarView?.binding?.tvTitle?.setText(sharedPreference.getValueString(Constant.LIBRARY_NAME))
         if(sharedPreference.getStartPage(Constant.START_PAGE)==Constant.StartScreen.LIBRARY_HOME) {
             val fragment = HomeFragment()
@@ -79,6 +112,7 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
                 .replace(R.id.flFragment, fragment)
                 .commit()
         }
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         setupNavigation()
 
         if (sharedPreference.getValueInt(Constant.PATRON_ID)!=0)
@@ -86,7 +120,127 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
         else binding?.tvLogout?.text = resources.getString(R.string.login)
 
         updateStatusBarColor("#000000")
+        checkCurrentDate()
+        setObserver()
+    }
 
+    private fun checkCurrentDate(){
+        df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        c = Calendar.getInstance().time
+        val currentDate = df!!.format(c)
+        Log.d("current_date",currentDate+sharedPreference.getValueString(Constant.CURRENT_DATE))
+        if(currentDate!=sharedPreference.getValueString(Constant.CURRENT_DATE)){
+            viewModel.getCheckout(sharedPreference.getValueInt(Constant.PATRON_ID).toString())
+        }
+        viewModel.getCheckout(sharedPreference.getValueInt(Constant.PATRON_ID).toString())
+        sharedPreference.save(Constant.CURRENT_DATE,currentDate)
+
+    }
+    private fun setObserver(){
+        viewModel.checkoutResponseModel.observe(this) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    ProgressDialog.hideProgressBar()
+                    checkForNotification(response.data)
+                }
+                is Resource.Loading -> {
+                    ProgressDialog.showProgressBar(this)
+                }
+                is Resource.Error -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+                else -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+            }
+        }
+
+        viewModel.notificationRequestModel.observe(this) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    ProgressDialog.hideProgressBar()
+                    //showNotification(title, message)
+                }
+                is Resource.Loading -> {
+                    ProgressDialog.showProgressBar(this)
+                }
+                is Resource.Error -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+                else -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+            }
+        }
+    }
+
+    private fun checkForNotification(data: List<CheckoutResponseModel>?) {
+        data?.forEach {
+            if(it.dueDate?.let { it1 -> Utils.daysCount(it1) }!! <=sharedPreference.getValueInt(Constant.WARRING_DAYS)){
+                Log.d("dueDate","${it.dueDate?.let { it1 -> Utils.daysCount(it1) }!!} ${sharedPreference.getValueInt(Constant.WARRING_DAYS)}")
+                createNotification(it)
+            }
+        }
+    }
+
+    private fun createNotification(checoutResponseModel: CheckoutResponseModel) {
+        val title = "Due date reminder"//resources.getString(R.string.app_name)
+        val message = "${checoutResponseModel.bookDetailResponseModel?.title} Book due date is over on ${checoutResponseModel.dueDate?.let {
+            Utils.changeDateFormat(
+                it
+            )
+        }}, Please renew"
+        val requestModel = NotificationModel()
+        requestModel.title = title
+        requestModel.message = message
+        requestModel.libraryId =sharedPreference.getValueString(Constant.LIBRARY_ID)
+        requestModel.userId =sharedPreference.getValueInt(Constant.PATRON_ID).toString()
+        requestModel.bookId =checoutResponseModel?.itemDetailResponseModel?.biblioId?.toString()
+        requestModel.dateTime =Utils.getDateTime("yyyy-MM-dd HH:mm")
+        requestModel.status ="1"
+        viewModel.addNotification(requestModel)
+        showNotification(title,message)
+    }
+
+    private fun showNotification(title: String, message: String) {
+        val intent = Intent(this, DashboardActivity::class.java)
+
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        // RemoteViews are used to use the content of
+        // some different layout apart from the current activity layout
+        val contentView = RemoteViews(packageName, R.layout.activity_after_notification)
+
+        // checking if android version is greater than oreo(API 26) or not
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.GREEN
+            notificationChannel.enableVibration(false)
+            notificationManager.createNotificationChannel(notificationChannel)
+
+            builder = Notification.Builder(this, channelId)
+                //.setContent(contentView)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle(title)
+                .setContentText(message)
+                //.setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
+                .setContentIntent(pendingIntent)
+        } else {
+
+            builder = Notification.Builder(this)
+                //.setContent(contentView)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle(title)
+                .setContentText(message)
+                //.setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
+                .setContentIntent(pendingIntent)
+        }
+        notificationManager.notify(1234, builder.build())
     }
 
     override fun provideViewResource(): Int {
@@ -145,6 +299,7 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
                     supportFragmentManager,
                     "FilterFragment"
                 )
+                homeToolbarView.binding.tvCount.id,homeToolbarView.binding.ivNotification.id ->replaceFragment(NotificationFragment())
                 tvLogout.id -> checkUserLogin()
                 ivClose.id -> closeDrawer()
                 toolbarView.binding.rlBack.id -> {
@@ -340,6 +495,8 @@ class DashboardActivity : MVVMBindingActivity<ActivityDashboardBinding>() {
             homeToolbarView.binding.toolbarDrawer.setOnClickListener(this@DashboardActivity)
             homeToolbarView.binding.filter.setOnClickListener(this@DashboardActivity)
             homeToolbarView.binding.ivVoice.setOnClickListener(this@DashboardActivity)
+            homeToolbarView.binding.ivNotification.setOnClickListener(this@DashboardActivity)
+            homeToolbarView.binding.tvCount.setOnClickListener(this@DashboardActivity)
             ivClose.setOnClickListener(this@DashboardActivity)
 
 

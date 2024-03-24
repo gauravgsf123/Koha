@@ -2,7 +2,6 @@ package com.bbb.koha.module.my_account.reading_history
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.bbb.koha.common.Constant
 import com.bbb.koha.databinding.FragmentReadingHistoryBinding
 import com.bbb.koha.module.dashboard.DashboardActivity
 import com.bbb.koha.module.dashboard.fragment.BookDetailFragment
-import com.bbb.koha.module.my_account.summary.model.BookDetailResponseModel
 import com.bbb.koha.module.my_account.summary.model.CheckoutResponseModel
 import com.bbb.koha.network.Resource
 import com.bbb.koha.network.ViewModelFactoryClass
@@ -72,7 +70,9 @@ class ReadingHistoryFragment : BaseFragment() {
                 adapterPosition: Int,
                 checkoutResponseModel: CheckoutResponseModel
             ) {
-                (activity as DashboardActivity).addFragment(BookDetailFragment(checkoutResponseModel?.bookDetailResponseModel!!))
+                (activity as DashboardActivity).addFragment(
+                    BookDetailFragment(checkoutResponseModel?.bookDetailResponseModel!!)
+                )
             }
 
         })

@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bbb.koha.common.SharedPreference
+import com.bbb.koha.module.my_account.charges.ChargesFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import java.text.SimpleDateFormat
@@ -175,7 +176,7 @@ abstract class BaseActivity : AppCompatActivity(),View.OnClickListener {
             .commit()
     }
 
-    open fun addFragment(fragment:Fragment){
+    open fun addFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
             .add(com.bbb.koha.R.id.flFragment, fragment)
             .addToBackStack(fragment.tag)

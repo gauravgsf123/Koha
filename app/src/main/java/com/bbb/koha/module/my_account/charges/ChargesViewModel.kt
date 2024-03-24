@@ -13,6 +13,8 @@ import com.bbb.koha.login.model.ValidateUserRequestModel
 import com.bbb.koha.login.model.ValidateUserResponseModel
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenRequest
 import com.bbb.koha.module.my_account.charges.model.MerchantauthtokenResponse
+import com.bbb.koha.module.my_account.charges.model.PaymentCreditRequest
+import com.bbb.koha.module.my_account.charges.model.PaymentCreditResponse
 import com.bbb.koha.module.my_account.charges.model.UserBillDataRequest
 import com.bbb.koha.module.my_account.charges.model.UserBillDataResponse
 import com.bbb.koha.network.Resource
@@ -26,6 +28,8 @@ class ChargesViewModel(var app: Application) : ViewModel() {
     private val repository = ChargesRepository()
     private var mChargesResponseModel = MutableLiveData<Resource<List<ChargesResponseModel>>>()
     var chargesResponseModel: LiveData<Resource<List<ChargesResponseModel>>> = mChargesResponseModel
+    private var mPaymentCreditResponse = MutableLiveData<Resource<PaymentCreditResponse>>()
+    var paymentCreditResponse: LiveData<Resource<PaymentCreditResponse>> = mPaymentCreditResponse
     private var mMerchantauthtokenResponse = MutableLiveData<Resource<MerchantauthtokenResponse>>()
     var merchantauthtokenResponse: LiveData<Resource<MerchantauthtokenResponse>> = mMerchantauthtokenResponse
     private var mUserBillDataResponse = MutableLiveData<Resource<UserBillDataResponse>>()
@@ -52,6 +56,27 @@ class ChargesViewModel(var app: Application) : ViewModel() {
                 }
             }
        // }
+        return Resource.Error(response.message())
+    }
+
+    fun paymentCredit(patronId: Int,paymentCreditRequest: PaymentCreditRequest) {
+        if (Utils.hasInternetConnection(mContext)) {
+            mPaymentCreditResponse.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = repository.paymentCredit(patronId,paymentCreditRequest)
+                mPaymentCreditResponse.value = response?.let { handlePaymentCreditResponse(it) }
+            }
+        } else mPaymentCreditResponse.value =
+            Resource.Error(app.resources.getString(R.string.no_internet))
+    }
+
+    private fun handlePaymentCreditResponse(response: Response<PaymentCreditResponse>): Resource<PaymentCreditResponse>? {
+        response.body()?.let {
+            return when (response.code()) {
+                201 -> Resource.Success("Success",it)
+                else -> Resource.Error(response.message())
+            }
+        }
         return Resource.Error(response.message())
     }
 

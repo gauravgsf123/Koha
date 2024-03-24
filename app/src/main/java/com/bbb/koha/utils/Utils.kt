@@ -99,6 +99,15 @@ object Utils {
         return TimeUnit.MILLISECONDS.toDays(millionSeconds)//(day[Calendar.DAY_OF_MONTH] - (calCurr[Calendar.DAY_OF_MONTH]))
     }
 
+    fun isSubscription(dateStr : String):Long{
+        var date:Date?=null
+        date = SimpleDateFormat("yyyy-MM-dd").parse(dateStr)!!
+        val millionSeconds = date.time - Calendar.getInstance().timeInMillis
+        val days = TimeUnit.MILLISECONDS.toDays(millionSeconds).toString() + "days"
+        Log.d("days",days)
+        return TimeUnit.MILLISECONDS.toDays(millionSeconds)//(day[Calendar.DAY_OF_MONTH] - (calCurr[Calendar.DAY_OF_MONTH]))
+    }
+
     fun getInvoiceNumber():String{
         var sdf = SimpleDateFormat("yyyyMMddHHmmss")
         val millionSeconds = sdf.format(Date())//- Calendar.getInstance().timeInMillis

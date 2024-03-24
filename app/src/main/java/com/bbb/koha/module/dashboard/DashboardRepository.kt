@@ -1,8 +1,11 @@
 package com.bbb.koha.module.dashboard
 
 import com.bbb.koha.module.dashboard.model.PlaceHoldRequestModel
+import com.bbb.koha.module.notification.model.NotificationModel
+import com.bbb.koha.module.notification.model.NotificationRequestModel
 import com.bbb.koha.network.ApiClient
 import com.bbb.koha.network.RetrofitInstance
+import com.bbb.koha.network.RetrofitInstanceForGlobal
 
 
 /**
@@ -26,4 +29,7 @@ class DashboardRepository {
     suspend fun searchBookItem(query: String,page: Int, perPage: Int) = RetrofitInstance.apiService?.searchBookItem(query,page,perPage)
     suspend fun getCheckoutOfBiblio(biblioId: Int) = RetrofitInstance.apiService?.getCheckoutOfBiblio(biblioId)
     suspend fun getAllPatrons() = RetrofitInstance.apiService?.getAllPatrons()
+    suspend fun getCheckout(patronId: String?) = RetrofitInstance.apiService?.getCheckout(patronId)
+    suspend fun addNotification(notificationRequestModel: NotificationModel) = RetrofitInstanceForGlobal.apiService?.addNotification(notificationRequestModel)
+    suspend fun getNotification(notificationRequestModel: NotificationRequestModel) = RetrofitInstanceForGlobal.apiService?.getNotification(notificationRequestModel)
 }

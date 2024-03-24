@@ -12,9 +12,11 @@ import com.bbb.koha.app.BaseFragment
 import com.bbb.koha.common.Constant
 import com.bbb.koha.databinding.FragmentChargesBinding
 import com.bbb.koha.module.dashboard.DashboardActivity
+import com.bbb.koha.module.my_account.charges.model.PaymentCreditRequest
 import com.bbb.koha.network.Resource
 import com.bbb.koha.network.ViewModelFactoryClass
 import com.bbb.koha.utils.ProgressDialog
+import com.bbb.koha.utils.Utils
 
 
 class ChargesFragment : BaseFragment() {
@@ -80,9 +82,30 @@ class ChargesFragment : BaseFragment() {
                 }
             }
         }
+
+        viewModel.paymentCreditResponse.observe(requireActivity()) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    ProgressDialog.hideProgressBar()
+                    viewModel.getCharges(sharedPreference.getValueInt(Constant.PATRON_ID))
+                }
+                is Resource.Loading -> {
+                    ProgressDialog.showProgressBar(requireContext())
+                }
+                is Resource.Error -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+                else -> {
+                    ProgressDialog.hideProgressBar()
+                    response.message?.let { showToast(it) }
+                }
+            }
+        }
     }
 
     private fun setupChargeRecylerView(data:List<ChargesResponseModel>){
+        totalAmount = 0
         data.forEach {
             totalAmount+=it.amountOutstanding!!
         }
@@ -104,12 +127,28 @@ class ChargesFragment : BaseFragment() {
                             selectedView(binding.tvFine)
                         }
 
+                        override fun onPaymentDone(tnxId: String) {
+                            paymentCredit(tnxId)
+                        }
+
                     })
                     fragmentPayBottomSheetFragment.arguments = bundle
                     fragmentPayBottomSheetFragment.show(parentFragmentManager,"PayBottomSheetFragment")
                 }
             }
         }
+    }
+
+    private fun paymentCredit(tnxId: String){
+        val paymentCreditRequest = PaymentCreditRequest()
+        paymentCreditRequest.creditType = "PAYMENT"
+        paymentCreditRequest.amount = "1"
+        paymentCreditRequest.libraryId = sharedPreference.getValueString(Constant.LIBRARY_ID)
+        paymentCreditRequest.paymentType = "ONLINE"
+        paymentCreditRequest.date = Utils.getDateTime("yyyy-MM-dd")
+        paymentCreditRequest.description = "Overdue Charges Payment"
+        paymentCreditRequest.note = "$tnxId payment_transaction_id"
+        viewModel.paymentCredit(sharedPreference.getValueInt(Constant.PATRON_ID),paymentCreditRequest)
     }
 
     private fun selectedView(textView: TextView){
@@ -125,6 +164,7 @@ class ChargesFragment : BaseFragment() {
 
     interface CallBackInterface{
         fun onBackPress()
+        fun onPaymentDone(tnxId:String)
     }
 
 }

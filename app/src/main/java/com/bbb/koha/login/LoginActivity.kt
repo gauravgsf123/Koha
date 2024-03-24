@@ -95,6 +95,7 @@ class LoginActivity : MVVMBindingActivity<ActivityLoginBinding>() {
                     }
                     sharedPreference.save(Constant.USER_DETAIL,Gson().toJson(data))
                     sharedPreference.save(Constant.PATRON_ID, data.patronId!!)
+                    sharedPreference.save(Constant.LIBRARY_ID, data.libraryId!!)
                     sharedPreference.save(Constant.USER_PASSWORD, binding?.etPassword?.text.toString())
                     viewModel.getLibraryDetail(data.libraryId)
                 }

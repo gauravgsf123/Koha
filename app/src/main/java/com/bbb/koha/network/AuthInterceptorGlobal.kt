@@ -12,22 +12,22 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
-open class AuthInterceptor (val context: Context) : Interceptor {
+open class AuthInterceptorGlobal (val context: Context) : Interceptor {
     protected lateinit var sharedPreference: SharedPreference
     override fun intercept(chain: Interceptor.Chain): Response {
         if(!isConnected()) {
             throw NoConnectivityException()
         }
         //var authToken = "MTcwMDAyNDk2MC05NDg0NDItMC44OTQ0NzI1MzYyMzcxMTctZHdmd1gxRVBVaXhWZ1RVTTFxcEhzMjFCVTRPTFBu"
-        var authToken = SharedPreference(context).getValueString(Constant.ACCESS_TOKEN)
-        //var credentials: String = Credentials.basic("koha@bbb.com", "openlx@321")
+        //var authToken = SharedPreference(context).getValueString(Constant.ACCESS_TOKEN)
+        var credentials: String = Credentials.basic("koha@bbb.com", "openlx@321")
         var request = chain.request()
         request = request.newBuilder()
             .header("Content-Type", "Content-Type:application/x-www-form-urlencoded")
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
-            //.header("Authorization", credentials)
-            .header("Authorization","Bearer $authToken")
+            .header("Authorization", credentials)
+            //.header("Authorization","Bearer $authToken")
             .build()
 
         return try {
@@ -44,4 +44,11 @@ open class AuthInterceptor (val context: Context) : Interceptor {
         val netInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
         return netInfo != null && netInfo.isConnected
     }
+}
+
+class NoConnectivityException : IOException() {
+    // You can send any message whatever you want from here.
+    override val message: String
+        get() = "No Internet Connection"
+    // You can send any message whatever you want from here.
 }

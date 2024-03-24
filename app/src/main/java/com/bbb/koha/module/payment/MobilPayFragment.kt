@@ -1,7 +1,8 @@
-package com.bbb.koha.payment
+package com.bbb.koha.module.payment
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
@@ -16,12 +17,13 @@ import com.bbb.koha.R
 import com.bbb.koha.app.BaseFragment
 import com.bbb.koha.databinding.FragmentMobilPayBinding
 import com.bbb.koha.module.dashboard.DashboardActivity
+import com.bbb.koha.module.my_account.charges.ChargesFragment
 
 
-class MobilPayFragment(var url:String) : BaseFragment() {
+class MobilPayFragment(var url: String, val callBack: ChargesFragment.CallBackInterface) : BaseFragment() {
 
     private lateinit var binding:FragmentMobilPayBinding
-    private val finalUrl = "https://mobylpe.com/payBill/receipt.php?id=AxrvxW5Fo6091020&back=false"
+    private var isDone = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -48,23 +50,28 @@ class MobilPayFragment(var url:String) : BaseFragment() {
 
 
             // this will enable the javascript settings, it can also allow xss vulnerabilities
-            webView.settings.javaScriptEnabled = true
-            webView.settings.domStorageEnabled = true
             webView.settings.loadWithOverviewMode = true
-            webView.settings.setAllowUniversalAccessFromFileURLs(true);
+            webView.settings.useWideViewPort = true
+            webView.settings.javaScriptEnabled = true
+            webView.settings.allowFileAccess = true
+            webView.settings.allowContentAccess = true
+            webView.isScrollbarFadingEnabled = false
+            webView.settings.domStorageEnabled = true
 
             // if you want to enable zoom feature
             webView.settings.setSupportZoom(true)
 
             webView.webViewClient = object :WebViewClient(){
                 override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                    Log.d("WebView", "your current url when webpage loading..$url")
+                    if (url != null) {
+                        view?.loadUrl(url)
+                    };
                     return true
                 }
                 override fun onPageFinished(view: WebView?, url: String?) {
-                    if(url?.contains("receipt.php")==true){
-                        Log.d("WebView", "match $url")
-                        //showConfirmation()
+                    if(url?.contains("receipt.php")==true && !isDone){
+                        isDone = true
+                        showConfirmation(url)
                     }
                 }
 
@@ -75,45 +82,24 @@ class MobilPayFragment(var url:String) : BaseFragment() {
                 ) {
                     handler.proceed()
                     Log.d("WebView", "error $error")
+                    showToast(error.toString())
                 }
             }
-
-
-            /*webView.webViewClient = object : WebViewClient() {
-                override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
-                    super.onPageStarted(view, url, favicon)
-                    Log.d("WebView", "your current url when webpage loading..$url")
-                }
-
-                override fun onPageFinished(view: WebView, url: String) {
-                    Log.d("WebView", "your current url when webpage loading.. finish$url")
-                    if(finalUrl == url){
-                        Log.d("WebView", "match $url")
-                    }
-                    super.onPageFinished(view, url)
-                }
-
-                override fun onLoadResource(view: WebView, url: String) {
-                    // TODO Auto-generated method stub
-                    super.onLoadResource(view, url)
-                }
-
-                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                    println("when you click on any interlink on webview that time you got url :-$url")
-                    return super.shouldOverrideUrlLoading(view, url)
-                }
-            }*/
 
             webView.loadUrl(url)
         }
         return binding.root
     }
 
-    private fun showConfirmation() {
+    private fun showConfirmation(data:String) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Your payment is successful")
             .setCancelable(false)
             .setPositiveButton("done") { dialog, id ->
+                dialog.dismiss()
+                val uri = Uri.parse(data)
+                val id = uri.getQueryParameter("id")
+                callBack.onPaymentDone(id!!)
                 (activity as DashboardActivity).onBackPressed()
 
             }

@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvChooseDays" />
 
         <Button
-            android:id="@+id/btnReset"
+            android:id="@+id/btnApply"
             style="@style/button"
             android:layout_width="0dp"
             android:layout_height="@dimen/_44sdp"

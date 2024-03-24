@@ -3,6 +3,7 @@ package com.bbb.koha.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.bbb.koha.R
 import com.bbb.koha.common.Constant
@@ -11,7 +12,7 @@ import com.bbb.koha.databinding.HomeToolbarViewBinding
 import com.bbb.koha.utils.TrackedConstraintLayout
 
 
-class HomeToolbarView : TrackedConstraintLayout {
+class HomeToolbarView : TrackedConstraintLayout, View.OnClickListener {
     lateinit var binding: HomeToolbarViewBinding
 
     constructor(context: Context) : super(context) {
@@ -33,11 +34,23 @@ class HomeToolbarView : TrackedConstraintLayout {
     private fun init(context: Context) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = DataBindingUtil.inflate(inflater, R.layout.home_toolbar_view, this, true)
-        binding.imageViewClear.setOnClickListener {
-            binding.editTextSearch.setText("")
-        }
+        binding.imageViewClear.setOnClickListener(this)
+        //binding.ivNotification.setOnClickListener(this)
+        //binding.tvCount.setOnClickListener(this)
         val sharedPreference = SharedPreference(context)
         binding.tvTitle.text = sharedPreference.getValueString(Constant.LIBRARY_NAME)
 
+    }
+
+    override fun onClick(p0: View?) {
+        binding.run {
+            when(p0?.id){
+                imageViewClear.id->binding.editTextSearch.setText("")
+                /*ivNotification.id, tvCount.id->{
+
+                }*/
+
+            }
+        }
     }
 }

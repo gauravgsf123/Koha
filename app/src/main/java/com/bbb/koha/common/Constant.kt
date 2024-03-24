@@ -10,6 +10,7 @@ import android.os.Build
 object Constant {
     const val  LOCATION_SERVICE_NOTIF_ID = 1001
     const val BASE_URL ="http://dspace.bestbookbuddies.com:8081/api/v1/"
+    const val GLOBAL_BASE_URL ="https://openlx.com/koha_app/"
     const val GRANT_TYPE ="client_credentials"
     const val CLIENT_ID ="dc457ada-085d-4800-81a5-2411bed75009"
     const val CLIENT_SECRET  ="53c139ae-6d38-436f-98cd-ececf05cce5a"
@@ -30,6 +31,7 @@ object Constant {
     const val GENDER ="gender"
     const val USER_PASSWORD ="password"
     const val PATRON_ID ="patron"
+    const val LIBRARY_ID ="libraryId"
     const val LIBRARY_NAME ="library_name"
     const val USER_DETAIL ="user_detail"
     const val OTP ="otp"
@@ -40,6 +42,7 @@ object Constant {
     const val RECENTLY_BORROWED ="recently_borrowed"
     const val TOTAL_BOOK ="total_book"
     const val TOTAL_PATRON ="total_patron"
+    const val CURRENT_DATE ="current_date"
 
     const val LIBRARY ="library"
     const val CATEGORY ="category"
@@ -52,11 +55,12 @@ object Constant {
     const val TOTAL_AMOUNT ="total_amount"
     const val VERIFICATION_TYPE ="verification_type"
     const val ID ="id"
+    const val WARRING_DAYS ="warring_days"
 
     //mobilPay
     const val END_POINT = "getUserBillData"
     const val KEY = "1bb842b608261053c2993ae70ebb607cdb36bbf874159e8c8e6237eff5d758d5"
-    const val MERCHANT_ID = "V10004"
+    const val MERCHANT_ID = "B10001"//"V10004"
     const val PUBLIC_KEY = "791E14FF-6243-4A73-A6E1"
     const val MERCHANT_AUTH_URL = "https://pay.mobilpay.in/index.php/getmerchantauthtoken"
     const val BILL_DETAIL = "https://mobylpe.com/index.php/getUserBillData"
@@ -67,6 +71,13 @@ object Constant {
     const val TEMPLATE_ID = "63201e81d6fc05328e7839d2"
     const val SENDER_ID = "BESTBB"
     const val COUNTRY_CODE = "91"
+
+    //app feature
+    const val SMS = "sms"
+    const val PAYMENT_GATEWAY = "payment_gateway"
+    const val DISCHARGE = "discharge"
+    const val RENEW = "renew"
+    const val HOLD = "hold"
 
     object FragmentType{
         const val BARCODE_SCAN = 1
